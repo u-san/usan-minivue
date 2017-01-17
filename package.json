@@ -2,7 +2,7 @@
   "name": "usan-minivue",
   "version": "1.0.0",
   "description": "",
-  "main": "mini-vue.js",
+  "main": "build/minivue.min.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.prod.js",

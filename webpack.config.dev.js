@@ -1,17 +1,9 @@
-var webpack = require('webpack');
+ var webpack = require('webpack');
 var path = require('path');
 
 // var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    contentBase: '/',
-    port: 8080,
-    stats: { colors: true }
-  },
   entry: [
     'webpack/hot/dev-server',
     'webpack-dev-server/client?http://localhost:8080',
@@ -25,8 +17,8 @@ module.exports = {
   module: {
     loaders:[{ 
       test: /\.js[x]?$/, 
-      exclude: /node_modules/, 
-      loader: 'babel-loader?presets[]=es2015' 
+      loader: 'babel-loader?presets[]=es2015',
+      exclude: /node_modules/
     }]
   },
   resolve: {
@@ -46,6 +38,13 @@ module.exports = {
   //     }
   //   })
   // ],
-  devtool : 'source-map'
+  devtool : 'source-map',
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    port: 8080,
+    stats: { colors: true }
+  }
 };
 
