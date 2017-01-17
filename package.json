@@ -1,0 +1,28 @@
+{
+  "name": "usan-minivue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mini-vue.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/u-san/usan-minivue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/u-san/usan-minivue/issues"
+  },
+  "homepage": "https://github.com/u-san/usan-minivue#readme",
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
