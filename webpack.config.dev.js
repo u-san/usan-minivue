@@ -1,24 +1,23 @@
- var webpack = require('webpack');
-var path = require('path');
+let webpack = require('webpack');
+let path    = require('path');
+
 
 // var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
-    'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8080',
     './src/minivue.js'
   ],
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: "[name].js",
+    path: '/',
+    filename: './build/minivue.min.js',
     publicPath: '/'
   },
   module: {
     loaders:[{ 
-      test: /\.js[x]?$/, 
-      loader: 'babel-loader?presets[]=es2015',
-      exclude: /node_modules/
+      test: /\.js$/, 
+      loader: 'babel',
+      enclude: '/node_modules/'
     }]
   },
   resolve: {
@@ -26,18 +25,18 @@ module.exports = {
       root: './src',
       alias: {}
   },
-  // plugins: [
-  //   new HtmlWebpackPlugin({
-  //     template: path.resolve(__dirname, 'src/index.html'),
-  //     inject: 'body'
-  //   }),
-  //   new webpack.HotModuleReplacementPlugin(),
-  //   new webpack.DefinePlugin({
-  //     'process.env':{
-  //       'NODE_ENV': JSON.stringify('development')
-  //     }
-  //   })
-  // ],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, 'src/index.html'),
+    //   inject: 'body'
+    // }),
+    // new webpack.DefinePlugin({
+    //   'process.env':{
+    //     'NODE_ENV': JSON.stringify('development')
+    //   }
+    // })
+  ],
   devtool : 'source-map',
   devServer: {
     historyApiFallback: true,

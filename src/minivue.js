@@ -1,1 +1,1 @@
-import Compile from './Compile'
+import Compile from './Compile.js'
