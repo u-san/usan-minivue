@@ -119,9 +119,9 @@ const utils = {
 
 		updaterFunc && updaterFunc(node, this.getVMVal(vm, exp))
 
-		// new Watcher(vm, exp, (val, oldVal) => {
-		// 	updaterFunc && updaterFunc(node, val, oldVal)
-		// })
+		new Watcher(vm, exp, (val, oldVal) => {
+			updaterFunc && updaterFunc(node, val, oldVal)
+		})
 	},
 
 	eventHandler(node, vm, exp, dire) {

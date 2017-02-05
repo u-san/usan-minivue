@@ -22,7 +22,7 @@ export default class Observer {
 
         Object.defineProperty(data, key, {
             enumerable: true,
-            configurable: false,
+            con figurable: false,
             get: () => {
                 if (Dep.target) {
                     dep.depend()
