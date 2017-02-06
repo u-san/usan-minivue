@@ -1,33 +1,16 @@
 import Watcher from './Watcher'
 
 export default class Compile {
+
 	constructor(node, vm) {
 		this.vm = vm
-		this.node = this.isEleNode(node) ? node : document.querySelector(node)
+		this.node = this.isElementNode(node) ? node : document.querySelector(node)
 
 		if (this.node) {
 			this.fragment = this.toFragment(this.node)
 			this.init()
 			this.node.appendChild(this.fragment)
 		}
-	}
-
-	static isDirective(str) {
-		return str.indexOf('v-') === 0
-	}
-
-	static isEventDirective(str) {
-		return str.indexOf('on') === 0
-	}
-
-	static toFragment(node) {
-		let frag = document.createDocumentFragment()
-
-		while(node.firseChild) {
-			frag.appendChild(node.firseChild)
-		}
-
-		return frag
 	}
 
 	init() {
@@ -84,6 +67,32 @@ export default class Compile {
 	compileText(node, exp) {
 		utils.text(node, this.vm, exp)
 	}
+
+	isDirective(str) {
+		return str.indexOf('v-') === 0
+	}
+
+	isEventDirective(str) {
+		return str.indexOf('on') === 0
+	}
+
+	isElementNode(node) {
+        return node.nodeType === 1;
+    }
+
+    isTextNode(node) {
+        return node.nodeType === 3;
+    }
+
+	toFragment(node) {
+		let frag = document.createDocumentFragment()
+
+		while(node.firseChild) {
+			frag.appendChild(node.firseChild)
+		}
+
+		return frag
+	}
 }
 
 const utils = {
@@ -126,7 +135,7 @@ const utils = {
 
 	eventHandler(node, vm, exp, dire) {
 		let eventType = dire.split(':')[1]
-		let fn = vm.options.methods && vm.options.methods[exp]
+		let fn = vm.$options.methods && vm.$options.methods[exp]
 
 		if (!eventType || !fn) return
 

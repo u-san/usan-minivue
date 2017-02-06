@@ -1,6 +1,6 @@
 import Dep from './Dep.js'
 
-export default class Observer {
+class Observer {
     constructor(data) {
         this.data = data
         this.walk(data)
@@ -22,7 +22,7 @@ export default class Observer {
 
         Object.defineProperty(data, key, {
             enumerable: true,
-            con figurable: false,
+            configurable: false,
             get: () => {
                 if (Dep.target) {
                     dep.depend()
@@ -47,7 +47,7 @@ export default class Observer {
 }
 
 
-const observe = (val, vm) => {
+export const observe = (val, vm) => {
     if (!val || typeof val !== 'object') return
 
     return new Observer(val)
