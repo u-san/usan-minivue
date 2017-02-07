@@ -21,7 +21,7 @@ export default class Compile {
 		let nodeAttrs = node.attributes;
 
 		[].slice.call(nodeAttrs).forEach(a => {
-			let attrName = a.attrName
+			let attrName = a.name
 
 			if (!this.isDirective(attrName)) return true;
 
@@ -29,10 +29,10 @@ export default class Compile {
 				dire = attrName.substring(2)
 
 			if (this.isEventDirective(dire)) {
-				utils.eventHandler(node, this.vm, exp, dire)
+				utils.eventHandler(node, this.vm, val, dire)
 			}
 			else {
-				utils[dire] && utils[dire](node, this.vm, exp)
+				utils[dire] && utils[dire](node, this.vm, val)
 			}
 
 			node.removeAttribute(attrName)
@@ -87,8 +87,8 @@ export default class Compile {
 	toFragment(node) {
 		let frag = document.createDocumentFragment()
 
-		while(node.firseChild) {
-			frag.appendChild(node.firseChild)
+		while(node.firstChild) {
+			frag.appendChild(node.firstChild)
 		}
 
 		return frag
@@ -120,11 +120,11 @@ const utils = {
 
 			this.setVMVal(vm, exp, newVal)
 			val = newVal
-		})
+		}, false)
 	},
 
 	bind(node, vm, exp, dire) {
-		let updaterFunc = update[dire]
+		let updaterFunc = updater[dire]
 
 		updaterFunc && updaterFunc(node, this.getVMVal(vm, exp))
 
@@ -143,24 +143,24 @@ const utils = {
 	},
 
 	getVMVal(vm, exp) {
-		let val = vm._data
+		let data = vm._data
 		exp = exp.split('.')
 		exp.forEach(k => {
-			val = val[k]
+			data = data[k]
 		})
 
-		return val
+		return data
 	},
 
 	setVMVal(vm, exp, val) {
-		let value = vm._data
+		let data = vm._data
 		exp = exp.split('.')
 		exp.forEach((k, i) => {
 			if (i < exp.length - 1) {
-				value = value[k]
+				data = data[k]
 			}
 			else {
-				value[k] = val
+				data[k] = val
 			}
 		})
 	}
@@ -176,14 +176,14 @@ const updater = {
 	},
 
 	class(node, val, oldVal) {
-		let cls   = node.className.replce(oldVal, '').trim()
+		let cls   = node.className.replace(oldVal, '').trim()
 		let space = cls && String(val) ? ' ' : ''
 
 		node.className = cls + space + val 
 	},
 
-	model(node, val, oldVal) {
-		node.val = typeof val === 'undefined' ? '' : val
+	model(node, val) {
+		node.value = typeof val === 'undefined' ? '' : val
 	}
 }
 

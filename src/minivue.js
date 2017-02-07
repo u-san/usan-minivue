@@ -1,7 +1,7 @@
 import Compile from './Compile.js'
 import Watcher from './Watcher.js'
 import { observe } from './Observer.js'
-console.log(1)
+
 class Minivue {
 	constructor(opts) {
 		this.$options = opts
@@ -22,12 +22,14 @@ class Minivue {
 		new Watcher(this, key, cb)
 	}
 
+    // 遍历 data 的 key，把 data 上的属性代理到 vm 实例上
 	_proxy(key) {
 		Object.defineProperty(this, key, {
-			configurable: false,
 			enumerable: true,
+			configurable: true,
 			get: () => this._data[key],
-			set: () => {
+			set: newVal => {
+				console.log(newVal)
 				this._data[key] = newVal
 			}
 		})

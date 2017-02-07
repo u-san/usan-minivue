@@ -5,12 +5,7 @@
 	<title>Document</title>
 </head>
 <body>
-	<!-- <div id="app">
-		<input type="text" id="a" v-model="text">
-		{{ text }}
-	</div> -->
-
-	<div id="mvvm-app">
+	<div id="app">
 	    <input type="text" v-model="someStr">
 	    <input type="text" v-model="child.someStr">
 	    <p v-class="className" class="abc">
@@ -25,7 +20,7 @@
 
 	<script>
 	    var vm = new Minivue({
-	        el: '#mvvm-app',
+	        el: '#app',
 	        data: {
 	            someStr: 'hello ',
 	            className: 'btn',
@@ -43,9 +38,10 @@
 	        }
 	    });
 
-	    vm.$watch('child.someStr', function() {
-	        console.log(arguments);
-	    });
+	    // vm.$watch('child.someStr', function() {
+	    //     console.log(arguments);
+	    // });
+
 	</script>
 
 </body>

@@ -2,6 +2,7 @@ import Dep from './Dep.js'
 
 export default class Watcher {
 	constructor(vm, exp, cb) {
+        console.log(vm, exp, cb)
 		this.cb = cb
 		this.vm = vm
 		this.exp = exp
@@ -39,7 +40,7 @@ export default class Watcher {
 		let oldVal = this.value
 
 		if (value !== oldVal) {
-			this.value = val
+			this.value = value
 			this.cb.call(this.vm, value, oldVal)
 		}
 	}
@@ -48,18 +49,15 @@ export default class Watcher {
 		Dep.target = this
         let value = this.getVMVal()
         Dep.target = null
-
         return value
 	}
 
 	getVMVal() {
         let exp = this.exp.split('.')
         let val = this.vm._data
-
         exp.forEach(function(k) {
             val = val[k];
         })
-
         return val;
     }
 }
