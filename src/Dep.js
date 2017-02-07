@@ -11,6 +11,8 @@ class Dep {
     }
 
     depend() {
+        // Dep.target 表示当前正在计算的 Watcher，它是全局唯一的
+        // 因为在同一时间只能有一个 Watcher 被计算
         Dep.target.addDep(this)
     }
 
