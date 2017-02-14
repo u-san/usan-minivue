@@ -8,7 +8,6 @@ class Observer {
 
     walk(data) {
         Object.keys(data).forEach(key => {
-            console.log(key)
             this.convert(key, data[key])
         })
     }
@@ -24,14 +23,14 @@ class Observer {
     // 当改变 data 的属性时，则会调用 setter 方法, 这时调用 dep.notify 方法进行通知
 
     defineReactive(data, key, val) {
-        let dep = new Dep()
-        let childObj = observe(val)
-
+        let dep = new Dep()                         
+        let childObj = observe(val)  //data: {name: 'a', obj: {age:1}}
+//typeof childObj === object ???
         Object.defineProperty(data, key, {
             enumerable: true,
             configurable: true,
             get: () => {
-                console.log(Dep.target)
+                // console.log(Dep.target)
                 if (Dep.target) {
                     dep.depend()
                 }
@@ -39,7 +38,7 @@ class Observer {
                 return val
             },
             set: newVal => {
-                console.log(newVal)
+                // console.log(newVal)
 
                 if (newVal === val) return
 
@@ -56,7 +55,7 @@ class Observer {
     }
 }
 
-
+// 递归
 export const observe = (data, vm) => {
     if (!data || typeof data !== 'object') return
 

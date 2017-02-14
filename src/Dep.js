@@ -1,5 +1,6 @@
 let uid = 0
 
+// 依赖
 class Dep {
     constructor() {
         this.id   = uid++

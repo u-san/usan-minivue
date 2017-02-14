@@ -2,10 +2,9 @@ import Dep from './Dep.js'
 
 export default class Watcher {
 	constructor(vm, exp, cb) {
-        console.log(vm, exp, cb)
 		this.cb = cb
 		this.vm = vm
-		this.exp = exp
+		this.exp = exp  //someStr
 		this.depIds = {}
 		this.value = this.get()
 	}

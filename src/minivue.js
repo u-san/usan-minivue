@@ -29,7 +29,6 @@ class Minivue {
 			configurable: true,
 			get: () => this._data[key],
 			set: newVal => {
-				console.log(newVal)
 				this._data[key] = newVal
 			}
 		})

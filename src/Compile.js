@@ -14,13 +14,39 @@ export default class Compile {
 	}
 
 	init() {
-		this.compileNode(this.fragment)
+		this.compile(this.fragment)
 	}
 
+
 	compile(node) {
+		let childNodes = node.childNodes;
+
+		[...childNodes].forEach(n => {
+			let text = n.textContent,
+				reg  = /\{\{(.*)\}\}/;
+
+			switch(n.nodeType) {
+				case 1:
+					this.compileNode(n)
+					break
+				case 3:
+					if (!reg.test(text)) return
+					this.compileText(n, RegExp.$1)
+					break
+				default:
+					break
+			}
+
+			if (n.childNodes && n.childNodes.length) {
+				this.compileNode(n)
+			}
+		})
+	}
+
+	compileNode(node) {
 		let nodeAttrs = node.attributes;
 
-		[].slice.call(nodeAttrs).forEach(a => {
+		[...nodeAttrs].forEach(a => {
 			let attrName = a.name
 
 			if (!this.isDirective(attrName)) return true;
@@ -36,31 +62,6 @@ export default class Compile {
 			}
 
 			node.removeAttribute(attrName)
-		})
-	}
-
-	compileNode(node) {
-		let childNodes = node.childNodes;
-
-		[].slice.call(childNodes).forEach(n => {
-			let text = n.textContent,
-				reg  = /\{\{(.*)\}\}/;
-
-			switch(n.nodeType) {
-				case 1:
-					this.compile(n)
-					break
-				case 3:
-					if (!reg.test(text)) return
-					this.compileText(n, RegExp.$1)
-					break
-				default:
-					break
-			}
-
-			if (n.childNodes && n.childNodes.length) {
-				this.compileNode(n)
-			}
 		})
 	}
 
