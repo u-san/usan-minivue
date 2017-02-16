@@ -7,13 +7,10 @@
 <body>
 	<div id="app">
 	    <input type="text" v-model="someStr">
-	    <input type="text" v-model="child.someStr">
-	    <p v-class="className" class="abc">
+	    <p class="abc">
 	        {{someStr}}
-	        <span v-text="child.someStr"></span>
 	    </p>
-	    <p v-html="child.htmlStr"></p>
-	    <button v-on:click="clickBtn">change model</button>
+	  
 	</div>
 
 	<script src="./build/minivue.min.js"></script>
@@ -23,11 +20,11 @@
 	        el: '#app',
 	        data: {
 	            someStr: 'hello ',
-	            className: 'btn',
-	            htmlStr: '<span style="color: #f00;">red</span>',
-	            child: {
-	                someStr: 'World !'
-	            }
+	            // className: 'btn',
+	            // htmlStr: '<span style="color: #f00;">red</span>',
+	            // child: {
+	            //     someStr: 'World !'
+	            // }
 	        },
 
 	        methods: {

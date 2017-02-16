@@ -38,7 +38,7 @@ export default class Compile {
 			}
 
 			if (n.childNodes && n.childNodes.length) {
-				this.compileNode(n)
+				this.compile(n)
 			}
 		})
 	}
@@ -65,8 +65,8 @@ export default class Compile {
 		})
 	}
 
-	compileText(node, exp) {
-		utils.text(node, this.vm, exp)
+	compileText(node, key) {
+		utils.text(node, this.vm, key)
 	}
 
 	isDirective(str) {
@@ -97,67 +97,67 @@ export default class Compile {
 }
 
 const utils = {
-	text(node, vm, exp) {
-		this.bind(node, vm, exp, 'text')
+	text(node, vm, key) {
+		this.bind(node, vm, key, 'text')
 	},
 
-	html(node, vm, exp) {
-		this.bind(node, vm, exp, 'html')
+	html(node, vm, key) {
+		this.bind(node, vm, key, 'html')
 	},
 
-	class(node, vm, exp) {
-		this.bind(node, vm, exp, 'class')
+	class(node, vm, key) {
+		this.bind(node, vm, key, 'class')
 	},
 
-	model(node, vm, exp) {
-		this.bind(node, vm, exp, 'model')
+	model(node, vm, key) {
+		this.bind(node, vm, key, 'model')
 
-		let val = this.getVMVal(vm, exp)
+		let val = this.getVMVal(vm, key)
 
 		node.addEventListener('input', e => {
 			let newVal = e.target.value
 
 			if (val === newVal) return
 
-			this.setVMVal(vm, exp, newVal)
+			this.setVMVal(vm, key, newVal)
 			val = newVal
 		}, false)
 	},
 
-	bind(node, vm, exp, dire) {
+	bind(node, vm, key, dire) {
 		let updaterFunc = updater[dire]
 
-		updaterFunc && updaterFunc(node, this.getVMVal(vm, exp))
+		updaterFunc && updaterFunc(node, this.getVMVal(vm, key))
 
-		new Watcher(vm, exp, (val, oldVal) => {
+		new Watcher(vm, key, (val, oldVal) => {
 			updaterFunc && updaterFunc(node, val, oldVal)
 		})
 	},
 
-	eventHandler(node, vm, exp, dire) {
+	eventHandler(node, vm, key, dire) {
 		let eventType = dire.split(':')[1]
-		let fn = vm.$options.methods && vm.$options.methods[exp]
+		let fn = vm.$options.methods && vm.$options.methods[key]
 
 		if (!eventType || !fn) return
 
 		node.addEventListener(eventType, fn.bind(vm), false)
 	},
 
-	getVMVal(vm, exp) {
+	getVMVal(vm, key) {
 		let data = vm._data
-		exp = exp.split('.')
-		exp.forEach(k => {
+		key = key.split('.')
+		key.forEach(k => {
 			data = data[k]
 		})
 
 		return data
 	},
 
-	setVMVal(vm, exp, val) {
+	setVMVal(vm, key, val) {
 		let data = vm._data
-		exp = exp.split('.')
-		exp.forEach((k, i) => {
-			if (i < exp.length - 1) {
+		key = key.split('.')
+		key.forEach((k, i) => {
+			if (i < key.length - 1) {
 				data = data[k]
 			}
 			else {
